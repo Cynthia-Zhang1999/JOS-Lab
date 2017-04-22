@@ -1,5 +1,5 @@
 Question1
-设置不同的handler函数来处理不同的exception/interupt是因为不同的exception/interupt
+需要设置不同的handler函数来处理不同的exception/interupt是因为不同的exception/interupt
 需要不同的处理方式来处理，因此不太适合用统一的方式来处理所有的异常。比如说有的异常
 处理后不返回被中断的指令，而有的中断只是为了IO处理，仍然需要返回被中断的指令继续执行。
 
