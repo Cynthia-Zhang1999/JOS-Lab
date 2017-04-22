@@ -1,0 +1,29 @@
+本文件回答了Questions，Lab2代码的实现思路请见lab2.pdf
+
+Question1：
+x的type应该是uintptr_t，因为value本身是一个指向char的指针，值为虚拟地址。
+
+Question2：
+Entry	Base-Virtual-Address	Points to (logically)
+960	0xf0000000	Kernbase
+959	0xefc00000	Page directory (kernel-only, R/W)
+958	0xef800000	ULIM?
+957	0xef400000	Page directory (kernel/user, R-O)
+956	0xef000000	UPAGES，mapping page array
+955	0xeec00000	UTOP mapping “envs” array
+
+Question3:
+(1)我们在初始化page_free_list时就已经绕过了IDT、Kernel及kern_pgdir、pages数组
+所在的页，之后不会将这些页分配给用户。
+(2)Page有自己的权限，如果PTE_U没被设置，则用户无法访问。
+
+Question4：
+2G，Pages最大为4M，struct Page大小为8Bytes，（4M/8Bytes）*4K=2G.
+
+Question5：
+为支持2G的最大内存，我们需要4M的Pages，2M的PTE，4K的PDE，
+
+Question6：
+在entry.S中jmp *%eax，eip指令执行完后，EIP即变成大于KERNBASE。
+虚拟地址的0-4M也映射在了物理地址中的0-4M，所以即使EIP一开始很小也可以。
+但之后kern_pgdir要被创建，虚拟地址0-4M会被抛弃，所以EIP必须增大。
