@@ -13,9 +13,11 @@ Entry	Base-Virtual-Address	Points to (logically)
 955	0xeec00000	UTOP mapping “envs” array
 
 Question3:
-(1)我们在初始化page_free_list时就已经绕过了IDT、Kernel及kern_pgdir、pages数组
+(1)
+我们在初始化page_free_list时就已经绕过了IDT、Kernel及kern_pgdir、pages数组
 所在的页，之后不会将这些页分配给用户。
-(2)Page有自己的权限，如果PTE_U没被设置，则用户无法访问。
+(2)
+Page有自己的权限，如果PTE_U没被设置，则用户无法访问。
 
 Question4：
 2G，Pages最大为4M，struct Page大小为8Bytes，（4M/8Bytes）*4K=2G.
